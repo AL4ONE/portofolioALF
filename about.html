@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/navbar.css">
+    <link rel="stylesheet" href="style/footer.css">
+    <link rel="stylesheet" href="style/about.css">
+</head>
+<body>
+    <div class="about-page">
+        <div class="container">
+            <nav>
+                <div id="navbar">
+            
+            
+                    <div class="list">
+        <a href="index.html" id="home" class="button">Home</a>
+        <a href="about.html" id="about" class="button">About</a>
+        <a href="project.html" id="project" class="button">Project</a>
+        <a href="achievement.html" id="achievement" class="button">Achievement</a>
+        <a href="article.html" id="article" class="button">Article</a>
+        <a href="contact.html" id="contact" class="button">Contact</a>
+                    </div>
+            
+                </div>
+            </nav>
+
+            <div class="twelve">
+                <h1>Alfian Ardiansyah</h1>
+            </div>
+
+
+            <div class="about-container">
+                <div class="about-left">
+                    <img src="alfian3.png" alt="Alfian Ardiansyah" class="about-photo">
+                </div>
+                <div class="about-right">
+                    <h2>Hi, I'm Alfian Ardiansyah 👋</h2>
+                    <p>
+                        I'm a <strong>Web Developer</strong> passionate about building clean and functional websites.
+                        I specialize in <strong>HTML</strong>, <strong>CSS</strong>, <strong>JavaScript</strong>, and currently
+                        learning <strong>Laravel</strong> and <strong>React</strong>.
+                    </p>
+                    <p>
+                        Outside of coding, I enjoy making games 🎮, exploring design trends 🎨, and learning new technologies ⚙️.
+                    </p>
+                    <div class="about-buttons">
+                        <a href="project.html" class="button">See My Projects</a>
+                        <a href="contact.html" class="button">Let's Talk</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <p>made by Alfian Ardiansyah</p>
+                <div class="social-icons">
+                    <a href="#" class="icoon"><img src="images/whatsapp-logo-png-white.webp" alt=""></a>
+                    <a href="https://github.com/AL4ONE" target="_blank" class="icoon"><img src="images/logogitHub.png"
+                            alt=""></a>
+                    <a href="https://www.instagram.com/al_for1/" target="_blank" class="icoon"><img
+                            src="images/Instagram-Logo-PNG.png" alt=""></a>
+                </div>
+                <p class="copyright">2025 @alfian</p>
+            </div>
+            <div class="footer-right">
+                <div class="footer-column">
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Project</a>
+                    <a href="#">Achievement</a>
+                </div>
+                <div class="footer-column">
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Project</a>
+                    <a href="#">Achievement</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+                const path = window.location.pathname.toLowerCase();
+                const currentFile = path.split("/").pop();
+
+                const navLinks = document.querySelectorAll(".list .button");
+
+                navLinks.forEach(link => {
+                    const hrefFile = link.getAttribute("href").toLowerCase();
+                    if (hrefFile === currentFile) {
+                        link.classList.add("selected");
+                    } else {
+                        link.classList.remove("selected");
+                    }
+                });
+            });
+
+    </script>
+</body>
+</html>

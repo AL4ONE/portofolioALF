@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <link rel="stylesheet" href="style/navbar.css">
+</head>
+<body>
+    <nav>
+        <div id="navbar">
+    
+    
+            <div class="list">
+                <a href="index.html" id="home" class="button">Home</a>
+                <a href="about.html" id="about" class="button">About</a>
+                <a href="project.html" id="project" class="button">Project</a>
+                <a href="achievement.html" id="achievement" class="button">Achievement</a>
+                <a href="article.html" id="article" class="button">Article</a>
+                <a href="contact.html" id="contact" class="button">Contact</a>
+            </div>
+    
+        </div>
+    </nav>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const path = window.location.pathname.toLowerCase();
+            const currentFile = path.split("/").pop();
+
+            const navLinks = document.querySelectorAll(".list .button");
+
+            navLinks.forEach(link => {
+                const hrefFile = link.getAttribute("href").toLowerCase();
+                if (hrefFile === currentFile) {
+                    link.classList.add("selected");
+                } else {
+                    link.classList.remove("selected");
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
