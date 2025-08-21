@@ -133,7 +133,7 @@
 
 .popup {
     position: fixed;
-    top: 59.5%;
+    top: 58%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.9);
     background-color: #121313;
@@ -141,7 +141,7 @@
     width: 340px;
     /* max-width: 180px; */
     border-radius: 15px;
-    border: 1px solid #44abf0;
+    border: 1px solid  var(--orange);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     display: none;
     opacity: 0;
@@ -317,7 +317,7 @@ a:hover {
 }
 
 #contact-form input[type="submit"] {
-    background-color: #048cdb;
+    background-color: var(--orange);
     color: #fff;
     padding: 10px 20px;
     border: none;

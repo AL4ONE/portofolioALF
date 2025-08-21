@@ -1,44 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-        <link rel="stylesheet" href="style/navbar.css">
+    <title>Achievement Timeline</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #4f46e5, #9333ea);
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 20px 40px;
+            box-sizing: border-box;
+        }
+
+        .timeline-item.left {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item.right {
+            left: 50%;
+        }
+
+        .timeline-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.6s ease-in-out;
+        }
+
+        .timeline-content.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item.left .timeline-content::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -12px;
+            border: 6px solid transparent;
+            border-left: 12px solid #fff;
+        }
+
+        .timeline-item.right .timeline-content::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: -12px;
+            border: 6px solid transparent;
+            border-right: 12px solid #fff;
+        }
+
+        .date {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 6px;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .desc {
+            font-size: 15px;
+            color: #374151;
+            margin-top: 5px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 50px;
+                padding-right: 25px;
+            }
+
+            .timeline-item.left,
+            .timeline-item.right {
+                left: 0;
+                text-align: left;
+            }
+
+            .timeline-item.left .timeline-content::after,
+            .timeline-item.right .timeline-content::after {
+                left: -12px;
+                border-right: 12px solid #fff;
+                right: auto;
+                border-left: none;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <nav>
-        <div id="navbar">
-    
-    
-            <div class="list">
-                <a href="index.html" id="home" class="button">Home</a>
-                <a href="about.html" id="about" class="button">About</a>
-                <a href="project.html" id="project" class="button">Project</a>
-                <a href="achievement.html" id="achievement" class="button">Achievement</a>
-                <a href="article.html" id="article" class="button">Article</a>
-                <a href="contact.html" id="contact" class="button">Contact</a>
+
+    <h1>My Achievements</h1>
+
+    <div class="timeline">
+        <div class="timeline-item left">
+            <div class="timeline-content">
+                <div class="date">2023</div>
+                <div class="title">Juara 1 Lomba Web Design</div>
+                <div class="desc">Memenangkan lomba tingkat provinsi dengan project web edukasi interaktif.</div>
             </div>
-    
         </div>
-    </nav>
+        <div class="timeline-item right">
+            <div class="timeline-content">
+                <div class="date">2022</div>
+                <div class="title">Finalis Hackathon Nasional</div>
+                <div class="desc">Bersama tim membuat aplikasi smart learning yang tembus ke babak final.</div>
+            </div>
+        </div>
+        <div class="timeline-item left">
+            <div class="timeline-content">
+                <div class="date">2021</div>
+                <div class="title">Best Project IT Club</div>
+                <div class="desc">Proyek IoT monitoring suhu berhasil jadi proyek terbaik tahunan di IT Club.</div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const path = window.location.pathname.toLowerCase();
-            const currentFile = path.split("/").pop();
+        // Animasi saat scroll
+        const items = document.querySelectorAll('.timeline-content');
 
-            const navLinks = document.querySelectorAll(".list .button");
-
-            navLinks.forEach(link => {
-                const hrefFile = link.getAttribute("href").toLowerCase();
-                if (hrefFile === currentFile) {
-                    link.classList.add("selected");
-                } else {
-                    link.classList.remove("selected");
+        const showOnScroll = () => {
+            const triggerBottom = window.innerHeight * 0.85;
+            items.forEach(item => {
+                const itemTop = item.getBoundingClientRect().top;
+                if (itemTop < triggerBottom) {
+                    item.classList.add('show');
                 }
             });
-        });
+        };
 
+        window.addEventListener('scroll', showOnScroll);
+        window.addEventListener('load', showOnScroll);
     </script>
+
 </body>
+
 </html>

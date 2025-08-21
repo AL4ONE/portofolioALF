@@ -9,69 +9,68 @@
 </head>
 
 <body class="bg-gray-100">
+<section id="achievements" class="bg-gray-900 text-white py-16 px-6">
+    <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-12">🏆 My Achievements</h2>
 
-    <!-- Header -->
-    <div class="bg-indigo-600 text-white py-8 text-center">
-        <h1 class="text-3xl font-bold">Contact Us</h1>
-        <p class="text-lg">Kami siap membantu Anda</p>
-    </div>
+        <div class="relative border-l border-gray-600">
 
-    <!-- Content -->
-    <div class="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
-
-        <!-- Contact Info -->
-        <div class="space-y-6">
-            <h2 class="text-2xl font-semibold text-gray-800">Informasi Kontak</h2>
-            <p class="text-gray-600">Jangan ragu untuk menghubungi kami melalui form atau informasi di bawah ini:</p>
-
-            <div class="space-y-3">
-                <p><span class="font-bold">📍 Alamat:</span> Jl. Merdeka No. 123, Jakarta</p>
-                <p><span class="font-bold">📞 Telepon:</span> +62 812-3456-7890</p>
-                <p><span class="font-bold">✉️ Email:</span> support@example.com</p>
+            <!-- Achievement Item -->
+            <div class="mb-10 ml-6 opacity-0 translate-x-10 transition-all duration-700 ease-in-out scroll-fade">
+                <span
+                    class="absolute flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full -left-4 ring-4 ring-gray-900 animate-pulse">
+                    🥇
+                </span>
+                <h3 class="flex items-center mb-1 text-xl font-semibold">Juara 1 Lomba Web Design</h3>
+                <time class="block mb-2 text-sm font-normal leading-none text-gray-400">2024 - Tingkat Kota</time>
+                <p class="mb-4 text-base font-normal text-gray-300">Membangun website sekolah dengan konsep modern &
+                    responsif.</p>
             </div>
 
-            <!-- Google Maps -->
-            <div class="rounded-lg overflow-hidden shadow">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.997576684624!2d112.63028077574534!3d-7.137844870786268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e77f5a7e83c639f%3A0x9c07ad2dfd1d35f9!2sIndonesia!5e0!3m2!1sen!2sid!4v1690000000000!5m2!1sen!2sid"
-                    width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <!-- Achievement Item -->
+            <div class="mb-10 ml-6 opacity-0 -translate-x-10 transition-all duration-700 ease-in-out scroll-fade">
+                <span
+                    class="absolute flex items-center justify-center w-8 h-8 bg-green-600 rounded-full -left-4 ring-4 ring-gray-900 animate-bounce">
+                    🏆
+                </span>
+                <h3 class="mb-1 text-xl font-semibold">Finalis LKS Nasional</h3>
+                <time class="block mb-2 text-sm font-normal leading-none text-gray-400">2025 - Bidang Web
+                    Technologies</time>
+                <p class="mb-4 text-base font-normal text-gray-300">Mewakili sekolah dalam ajang kompetisi tingkat
+                    nasional.</p>
             </div>
+
+            <!-- Achievement Item -->
+            <div class="mb-10 ml-6 opacity-0 translate-x-10 transition-all duration-700 ease-in-out scroll-fade">
+                <span
+                    class="absolute flex items-center justify-center w-8 h-8 bg-yellow-500 rounded-full -left-4 ring-4 ring-gray-900 animate-spin">
+                    ⭐
+                </span>
+                <h3 class="mb-1 text-xl font-semibold">Juara 2 Hackathon</h3>
+                <time class="block mb-2 text-sm font-normal leading-none text-gray-400">2023 - Kompetisi Coding</time>
+                <p class="text-base font-normal text-gray-300">Mengembangkan aplikasi berbasis web dalam 24 jam nonstop.
+                </p>
+            </div>
+
         </div>
-
-        <!-- Contact Form -->
-        <div class="bg-white p-6 rounded-lg shadow">
-            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Kirim Pesan</h2>
-
-            <form action="#" method="POST" class="space-y-4">
-                <div>
-                    <label class="block text-gray-700 font-medium">Nama</label>
-                    <input type="text"
-                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500"
-                        placeholder="Nama lengkap">
-                </div>
-
-                <div>
-                    <label class="block text-gray-700 font-medium">Email</label>
-                    <input type="email"
-                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500"
-                        placeholder="Email aktif">
-                </div>
-
-                <div>
-                    <label class="block text-gray-700 font-medium">Pesan</label>
-                    <textarea
-                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500"
-                        rows="5" placeholder="Tulis pesan Anda..."></textarea>
-                </div>
-
-                <button type="submit"
-                    class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">
-                    Kirim Pesan
-                </button>
-            </form>
-        </div>
-
     </div>
+</section>
+
+<script>
+    // Scroll animation handler
+    const elements = document.querySelectorAll('.scroll-fade');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove('opacity-0', 'translate-x-10', '-translate-x-10');
+                entry.target.classList.add('opacity-100', 'translate-x-0');
+            }
+        });
+    }, { threshold: 0.2 });
+
+    elements.forEach(el => observer.observe(el));
+</script>
+
 </body>
 
 </html>

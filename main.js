@@ -14,6 +14,20 @@ const contactPage = document.querySelector("#contactPage");
 const achievementPage = document.querySelector("#achievementPage");
 const projectPage = document.querySelector("#projectPage");
 const textContainer = document.querySelector(".text-container");
+const footer = document.querySelector(".footer");
+const navbar = document.querySelector("#navbar");
+
+
+let intHome = setInterval(() => {
+    homePage.classList.remove("hide");
+    footer.classList.remove("hide");
+    navbar.classList.remove("hide");
+    clearInterval(intHome); // biar gak jalan terus
+}, 7000);
+
+setTimeout(() => {
+    textContainer.classList.add("hide");
+}, 8000);
 
 const gameOne = document.querySelector(".game1")
 listButton.forEach((button) => {
@@ -168,8 +182,6 @@ btnProject.addEventListener("click", e => {
     btnArticle.classList.remove('selected')
     btnProject.classList.add('selected')
 });
-
-
 
 
 
@@ -397,3 +409,20 @@ window.addEventListener("resize", () => {
 // Pasang id="projects-section" di section ini. Untuk menyembunyikan:
 // document.getElementById('projects-section').classList.add('hide')
 // Untuk menampilkan: classList.remove('hide')
+
+    // Scroll animation handler
+const items = document.querySelectorAll('.timeline-content');
+
+const showOnScroll = () => {
+    const triggerBottom = window.innerHeight * 0.85;
+    items.forEach(item => {
+        const itemTop = item.getBoundingClientRect().top;
+        if (itemTop < triggerBottom) {
+            item.classList.add('show');
+        }
+    });
+};
+
+window.addEventListener('scroll', showOnScroll);
+window.addEventListener('load', showOnScroll);
+
