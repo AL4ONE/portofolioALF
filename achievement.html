@@ -1,45 +1,333 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-        <link rel="stylesheet" href="style/navbar.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Projects – Game Gallery</title>
+    <style>
+        :root {
+            --bg: #0f1221;
+            --card: #151934;
+            --muted: #9aa3b2;
+            --text: #e8ecf1;
+            --primary: #6c8cff;
+            --ring: 0 0 0 3px rgba(108, 140, 255, .35);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            background: radial-gradient(1200px 600px at 20% -10%, #1a1f3f 0%, transparent 60%),
+                radial-gradient(800px 500px at 120% 0%, #1f244a 0%, transparent 60%),
+                var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin-inline: auto;
+            padding: 28px 20px 64px
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 18px
+        }
+
+        .title {
+            font-size: clamp(22px, 3vw, 32px);
+            font-weight: 800;
+            letter-spacing: .3px
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 18px 0
+        }
+
+        .input,
+        .select {
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .12);
+            color: var(--text);
+            padding: 10px 12px;
+            border-radius: 12px;
+            outline: none;
+            transition: box-shadow .2s, border-color .2s, background .2s;
+        }
+
+        .input:focus,
+        .select:focus {
+            box-shadow: var(--ring);
+            border-color: rgba(108, 140, 255, .5)
+        }
+
+        .select {
+            appearance: none;
+            cursor: pointer
+        }
+
+        .btn {
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: linear-gradient(180deg, rgba(255, 255, 255, .10), rgba(255, 255, 255, .04));
+            color: var(--text);
+            padding: 10px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            filter: brightness(1.1)
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 16px
+        }
+
+        @media (min-width:640px) {
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width:980px) {
+            .grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        /* Card */
+        .card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .03));
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
+            border-color: rgba(108, 140, 255, .4)
+        }
+
+        .thumb {
+            aspect-ratio: 16/10;
+            background: #0b0e1b;
+            display: block;
+            width: 100%;
+            object-fit: cover
+        }
+
+        .content {
+            padding: 14px 14px 16px
+        }
+
+        .name {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 2px 0 8px
+        }
+
+        .meta {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap
+        }
+
+        .badge {
+            font-size: 12px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            color: var(--text);
+            background: rgba(108, 140, 255, .14);
+            border: 1px solid rgba(108, 140, 255, .35)
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: space-between
+        }
+
+        .link {
+            font-size: 13px;
+            color: var(--primary);
+            text-decoration: none
+        }
+
+        .count {
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        /* Utility */
+        .hide {
+            display: none !important
+        }
+    </style>
 </head>
+
 <body>
-    <nav>
-        <div id="navbar">
-    
-    
-            <div class="list">
-                <a href="index.html" id="home" class="button">Home</a>
-                <a href="about.html" id="about" class="button">About</a>
-                <a href="project.html" id="project" class="button">Project</a>
-                <a href="achievement.html" id="achievement" class="button">Achievement</a>
-                <a href="article.html" id="article" class="button">Article</a>
-                <a href="contact.html" id="contact" class="button">Contact</a>
+    <section id="projects-section" class="container">
+        <div class="header">
+            <div>
+                <div class="title">Game Projects</div>
+                <div class="subtitle">Koleksi game yang pernah dibuat. Filter berdasarkan bahasa atau cari judulnya.
+                </div>
             </div>
-    
+            <div class="count" id="projectCount">0 projects</div>
         </div>
-    </nav>
+
+        <div class="controls">
+            <input id="searchInput" class="input" type="search" placeholder="Cari judul game…" />
+            <select id="languageFilter" class="select">
+                <option value="">Semua Bahasa</option>
+            </select>
+            <button id="resetBtn" class="btn" type="button">Reset</button>
+        </div>
+
+        <div id="grid" class="grid" aria-live="polite"></div>
+    </section>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const path = window.location.pathname.toLowerCase();
-            const currentFile = path.split("/").pop();
+        // ====== Data Projects (EDIT DI SINI) ======
+        const projects = [
+            {
+                title: "Pixel Runner",
+                image: "https://via.placeholder.com/800x500?text=Pixel+Runner",
+                languages: ["JavaScript", "HTML", "CSS"],
+                link: "#"
+            },
+            {
+                title: "Space Invader Clone",
+                image: "https://via.placeholder.com/800x500?text=Space+Invader+Clone",
+                languages: ["JavaScript", "Canvas"],
+                link: "#"
+            },
+            {
+                title: "2048 Remix",
+                image: "https://via.placeholder.com/800x500?text=2048+Remix",
+                languages: ["TypeScript", "Vite"],
+                link: "#"
+            },
+            {
+                title: "Snake Classic",
+                image: "https://via.placeholder.com/800x500?text=Snake+Classic",
+                languages: ["C#", ".NET"],
+                link: "#"
+            },
+            {
+                title: "Flappy Block",
+                image: "https://via.placeholder.com/800x500?text=Flappy+Block",
+                languages: ["JavaScript", "HTML"],
+                link: "#"
+            },
+            {
+                title: "Chess AI Mini",
+                image: "https://via.placeholder.com/800x500?text=Chess+AI+Mini",
+                languages: ["Python"],
+                link: "#"
+            }
+        ];
 
-            const navLinks = document.querySelectorAll(".list .button");
+        // ====== Util ======
+        const $ = (sel, scope = document) => scope.querySelector(sel);
+        const $$ = (sel, scope = document) => Array.from(scope.querySelectorAll(sel));
 
-            navLinks.forEach(link => {
-                const hrefFile = link.getAttribute("href").toLowerCase();
-                if (hrefFile === currentFile) {
-                    link.classList.add("selected");
-                } else {
-                    link.classList.remove("selected");
-                }
+        const grid = $('#grid');
+        const searchInput = $('#searchInput');
+        const languageFilter = $('#languageFilter');
+        const resetBtn = $('#resetBtn');
+        const projectCount = $('#projectCount');
+
+        function renderCards(list) {
+            grid.innerHTML = list.map(p => `
+        <article class="card">
+          <img class="thumb" src="${p.image}" alt="Thumbnail ${p.title}" loading="lazy" />
+          <div class="content">
+            <div class="row">
+              <h3 class="name">${p.title}</h3>
+              ${p.link ? `<a class="link" href="${p.link}" target="_blank" rel="noopener">Lihat</a>` : ''}
+            </div>
+            <div class="meta">${p.languages.map(l => `<span class="badge">${l}</span>`).join('')}</div>
+          </div>
+        </article>
+      `).join('');
+            projectCount.textContent = `${list.length} project${list.length !== 1 ? 's' : ''}`;
+        }
+
+        function uniqueLanguages(items) {
+            return Array.from(new Set(items.flatMap(p => p.languages))).sort((a, b) => a.localeCompare(b));
+        }
+
+        function populateLanguageFilter() {
+            const langs = uniqueLanguages(projects);
+            langs.forEach(l => {
+                const opt = document.createElement('option');
+                opt.value = l; opt.textContent = l; languageFilter.appendChild(opt);
             });
+        }
+
+        function applyFilters() {
+            const q = searchInput.value.trim().toLowerCase();
+            const lang = languageFilter.value;
+            const filtered = projects.filter(p => {
+                const matchesText = !q || p.title.toLowerCase().includes(q);
+                const matchesLang = !lang || p.languages.includes(lang);
+                return matchesText && matchesLang;
+            });
+            renderCards(filtered);
+        }
+
+        // Events
+        searchInput.addEventListener('input', applyFilters);
+        languageFilter.addEventListener('change', applyFilters);
+        resetBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            languageFilter.value = '';
+            applyFilters();
+            searchInput.focus();
         });
 
+        // Init
+        populateLanguageFilter();
+        renderCards(projects);
+
+        // ====== Integrasi ke SPA kamu ======
+        // Pasang id="projects-section" di section ini. Untuk menyembunyikan:
+        // document.getElementById('projects-section').classList.add('hide')
+        // Untuk menampilkan: classList.remove('hide')
     </script>
 </body>
+
 </html>

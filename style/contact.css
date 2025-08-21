@@ -1,0 +1,450 @@
+:root {
+    --black-beluga: #1b1b1b;
+    --white: #f1f2f3;
+    --light-grey: #f3f4f6;
+    --dark-grey: #6e7177;
+    --orange: #ff5c00;
+}
+
+#contactPage {
+    font-family: "Roboto", sans-serif;
+    letter-spacing: 0.4px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-repeat: repeat;
+    background-size: cover;
+    color: #fff;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    
+}
+
+
+#contactPage h2 {
+    font-weight: 500;
+    font-size: 16px;
+    margin: 0;
+    background: linear-gradient(185deg, #0281e2, #f4f3f5);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#contactPage h3 {
+    font-weight: 500;
+    font-size: 16px;
+    margin: 0;
+    background: linear-gradient(90deg, var(--orange), #f7d9f5);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.scene {
+    perspective: 1200px;
+    width: 80%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+}
+
+#contactPage .card-contact {
+    position: absolute;
+    width: 180px;
+    height: 240px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, z-index 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    transform-origin: center center;
+    animation-name: glow;
+    animation-duration: 1.3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+#contactPage .card-contact img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+#contactPage .card-contact img:hover {
+    animation: scale-up 0.5s ease forwards;
+}
+
+@keyframes scale-up {
+    to {
+        transform: scale(1.3);
+    }
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px var(--orange);
+    }
+
+    50% {
+        box-shadow: 0 0 10px var(--light-grey);
+    }
+
+    100% {
+        box-shadow: 0 0 15px var(--orange);
+    }
+}
+
+#contactPage .card-contact h3 {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    font-weight: 500;
+}
+
+#contactPage .twelve{
+    margin-top: -4rem;
+}
+#contactPage .twelve .h1About{ 
+    margin-top: -4rem;
+}
+
+.popup {
+    position: fixed;
+    top: 59.5%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background-color: #121313;
+    padding: 2rem;
+    width: 340px;
+    /* max-width: 180px; */
+    border-radius: 15px;
+    border: 1px solid #44abf0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    height: 450px;
+}
+
+.popup.show {
+    display: block;
+    opacity: 1;
+}
+
+.popup h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.popup p {
+    font-size: 16px;
+    margin-top: 10px;
+    color: #ddd;
+}
+
+.popup-close {
+    background-color: var(--white);
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px;
+    color: rgb(0, 0, 0);
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.popup-close:hover {
+    background-color: var(--orange);
+}
+
+/* about page */
+
+.about-inner {
+    display: grid;
+    width: 100%;
+    background-color: #080808;
+    border-radius: 15px;
+}
+
+.about-flex {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.about-flex img {
+    margin-bottom: 1rem;
+    width: 100%;
+    border-radius: 15px;
+}
+
+/* Service page */
+
+.services {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    height: 180px;
+    padding: 6px 12px;
+    background-image: url("https://iili.io/3QhBJ7p.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 15px;
+}
+
+.services-content,
+ul,
+li {
+    margin-top: 2rem;
+    color: #fff;
+}
+
+.services img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+ul.groene-vinkjes {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+ul.groene-vinkjes li::before {
+    content: "✔️";
+    color: green !important;
+    margin-right: 8px;
+}
+
+/* Projecs page */
+
+.projects,
+ul,
+li {
+    margin-top: 4px;
+    color: #fff;
+}
+
+.projects,
+ul {
+    list-style-type: none;
+    margin-top: 1rem;
+    padding-left: 0;
+}
+
+.projects {
+    margin-top: 1rem;
+    max-width: 400px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    color: #fff;
+}
+
+.projects img {
+    width: 100%;
+    height: 234px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+a {
+    font-size: 13px;
+    color: #fff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.project-caption {
+    font-size: 0.75rem;
+    margin-top: 4px;
+    color: #555;
+    line-height: 1.2;
+}
+
+/* contact form */
+#contact-form {
+    max-width: 500px;
+    color: rgb(243, 247, 250);
+    background-color: #050505;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#contact-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#contact-form input,
+#contact-form textarea {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 5px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#contact-form input[type="submit"] {
+    background-color: #048cdb;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#contact-form input[type="submit"]:hover {
+    background-color: #44abf0;
+}
+
+.touch {
+    font-weight: 500;
+}
+
+.work {
+    margin-top: 2rem;
+    display: grid;
+    align-items: center;
+    max-width: 400px;
+    text-align: left;
+    color: #fff;
+}
+
+strong {
+    color: var(--orange);
+}
+
+figcaption {
+    text-align: center;
+    padding: 5px;
+}
+
+@media (max-width: 1024px) {
+    .scene {
+        width: 100%;
+        height: 340px;
+    }
+
+    #contactPage .card-contact {
+        width: 140px;
+        height: 190px;
+    }
+
+    #contactPage .card-contact h3 {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .scene {
+        height: 300px;
+    }
+
+    .carousel {
+        transform: scale(0.9);
+        /* iets kleiner geheel */
+    }
+
+    #contactPage .card-contact {
+        width: 120px;
+        height: 160px;
+        margin: 0;
+        /* voorkom extra ruimte */
+    }
+
+    #contactPage .card-contact h3 {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 600px) {
+    .scene {
+        height: 270px;
+    }
+
+    .carousel {
+        transform: scale(0.8);
+    }
+
+    #contactPage .card-contact {
+        width: 100px;
+        height: 140px;
+    }
+
+    #contactPage .card-contact h3 {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .scene {
+        height: 250px;
+    }
+
+    .carousel {
+        transform: scale(0.75);
+    }
+
+    #contactPage .card-contact {
+        width: 90px;
+        height: 130px;
+    }
+
+    #contactPage .card-contact h3 {
+        font-size: 11px;
+    }
+
+    .popup {
+        width: 95%;
+        padding: 1rem;
+    }
+
+    .about-flex {
+        flex-direction: column;
+    }
+
+    .projects {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .projects img {
+        height: auto;
+    }
+
+    #contact-form {
+        width: 100%;
+    }
+}
