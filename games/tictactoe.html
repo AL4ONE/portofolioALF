@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background-color: #1d2649;
+
+
+        }
+
+        .box {
+            font-size: 90px;
+            color: #011025;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #app {
+            background-color: #011025;
+            width: 600px;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #square {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .box {
+            background-color: #1d2649;
+            box-shadow: 0px 0px 10px;
+            width: 200px;
+            height: 200px;
+
+        }
+
+        .color {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="color">Welcome to TicTacToe</h1>
+    <div id="app">
+        <div id="square">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+    </div>
+
+
+    <script>
+        let body = document.getElementById('app');
+        let boxes = document.querySelectorAll('.box');
+        let turn = "X";
+
+        boxes.forEach(box => {
+            box.addEventListener('click', event => {
+                if (box.innerText == '') {
+                    box.innerText = turn
+                } else {
+                    return
+                }
+                if (turn == 'X') {
+                    box.style.backgroundColor = '#d5f785';
+                    box.style.transform = "scale(1.02)";
+                    box.style.transition = ".5s";
+                } else {
+                    box.style.backgroundColor = '#011025';
+                    box.style.color = "white";
+                    box.style.transform = "scale(0.97)";
+                    box.style.transition = ".5s";
+                }
+                turn = turn == 'X' ? 'O' : 'X'
+                checkWin()
+            })
+        })
+
+        function checkWin() {
+
+            let pemenang = false;
+            if (boxes[0].innerText != "" && boxes[0].innerText == boxes[1].innerText && boxes[1].innerText == boxes[2].innerText) {
+                win(boxes[0].innerText)
+                pemenang = true;
+            }
+            if (boxes[3].innerText != "" && boxes[3].innerText == boxes[4].innerText && boxes[4].innerText == boxes[5].innerText) {
+                win(boxes[3].innerText)
+                pemenang = true;
+            }
+            if (boxes[6].innerText != "" && boxes[6].innerText == boxes[7].innerText && boxes[7].innerText == boxes[8].innerText) {
+                win(boxes[6].innerText)
+                pemenang = true;
+            }
+            if (boxes[0].innerText != "" && boxes[0].innerText == boxes[3].innerText && boxes[3].innerText == boxes[6].innerText) {
+                win(boxes[0].innerText)
+                pemenang = true;
+            }
+            if (boxes[1].innerText != "" && boxes[1].innerText == boxes[4].innerText && boxes[4].innerText == boxes[7].innerText) {
+                win(boxes[1].innerText)
+                pemenang = true;
+            }
+            if (boxes[2].innerText != "" && boxes[2].innerText == boxes[5].innerText && boxes[5].innerText == boxes[8].innerText) {
+                win(boxes[2].innerText)
+                pemenang = true;
+            }
+            if (boxes[0].innerText != "" && boxes[0].innerText == boxes[4].innerText && boxes[4].innerText == boxes[8].innerText) {
+                win(boxes[0].innerText)
+                pemenang = true;
+            }
+            if (boxes[2].innerText != "" && boxes[2].innerText == boxes[4].innerText && boxes[4].innerText == boxes[6].innerText) {
+                win(boxes[2].innerText)
+                pemenang = true;
+            }
+
+            if (!pemenang && Array.from(boxes).every(box => box.innerText !== "")) {
+                setTimeout(function () {
+                    alert("It's a draw!");
+                    window.location.reload();
+                }, 500);
+
+            }
+        }
+
+        function win(winner) {
+            setTimeout(function () {
+                alert(winner + " is Win")
+                window.location.reload()
+            }, 500)
+        }
+
+    </script>
+</body>
+
+</html>

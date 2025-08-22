@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.hide{
+    display: none !important;
+}
+
+#app{
+    width: 100vw;
+    height: 99vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form{
+    width: 300px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    flex-direction: column;
+}
+
+form input, select{
+    width: 300px;
+    padding: .3rem;
+}
+
+form .gun-select img{
+    width: 100px;
+    height: 80px;
+}
+form .target-select img{
+    width: 100px;
+    height: 100px;
+}
+.gun-select{
+    display: flex;
+    gap: .5rem;
+}
+
+.gun-select input{
+    width: auto;
+}
+.target-select input{
+    width: auto;
+}
+.target-select{
+    display: flex;
+    gap: 1rem;
+}
+
+.form-control{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.button{
+    display: flex;
+    gap: 4rem;
+}
+
+button{
+    width: 100px;
+    background-color: red;
+    color: white;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+}
+
+.btn-play{
+    background-color: forestgreen;
+}
+
+button:disabled{
+    background-color: grey;
+}
+
+.home-screen{
+    position: relative;
+    width: 100vw;
+    height: 99vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.inst-screen{
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 200px;
+    position: absolute;
+    background-color: grey;
+    padding: 1rem;
+}
+ul{
+    list-style-type: none;
+    
+}
+
+.game-screen{
+    width: 1000px;
+    height: 600px;
+    background-color: grey;
+}
+
+.game-left{
+    width: 800px;
+    height: 600px;
+    background-size: cover;
+    background: url(Sprites/background.jpg);
+    overflow: hidden;
+}
+
+.stats{
+    display: flex;
+    justify-content:space-around;
+    font-size: 20px;
+    font-weight: bold;
+    height: 30px;
+    align-items: center;
+    background-color: #0000006b;
+    color: white;
+}
+
+.target{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    animation: showTarget .5s;
+    border-radius: 50%;
+    pointer-events: fill;
+}
+
+.gun1{
+    background-image: url(Sprites/gun1.png);
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+}
+
+.gun2{
+    background-image: url(Sprites/gun2.png);
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+}
+
+.gun-in-game{
+    bottom: 0px;
+    position: absolute;
+    width: 250px;
+    height: 200px;
+    transition: background 1s linear;
+}
+
+.game-left{
+    position: relative;
+}
+
+@keyframes showTarget{
+    0%{
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.pointer{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 50%;
+    z-index: 10;
+    top: 50%;
+    cursor: none;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+}
+
+.modal-pause{
+    width: 200px;
+    height: 200px;
+    background-color: grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+    z-index: 1000;
+    flex-direction: column;
+}
+
+.game-over{
+    background-color: rgb(62, 62, 62);
+    width:300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: wheat;
+    z-index: 24234353535;
+    flex-direction: column;
+}
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="home-screen ">
+            <div class="form">
+                <form action="">
+                    <input type="text" placeholder="Input Username" class="input-username">
+                    <select name="level" id="level">
+                        <option value="easy">easy</option>
+                        <option value="medium">medium</option>
+                        <option value="hard">hard</option>
+                    </select>
+                    <div class="gun-select">
+                        <div class="form-control">
+                            <label for="gun1">
+                                <img src="Sprites/gun1.png" alt="">
+                            </label>
+                            <input type="radio" id="gun1">
+                        </div>
+                        <div class="form-control">
+                            <label for="gun2">
+                                <img src="Sprites/gun2.png" alt="">
+                            </label>
+                            <input type="radio" id="gun2">
+                        </div>
+                    </div>
+
+                    <div class="target-select">
+                        <div class="form-control">
+                            <label for="target1">
+                                <img src="Sprites/target1.png" alt="">
+                            </label>
+                            <input type="radio" id="target1">
+                        </div>
+                        <div class="form-control">
+                            <label for="target2">
+                                <img src="Sprites/target2.png" alt="">
+                            </label>
+                            <input type="radio" id="target2">
+                        </div>
+                        <div class="form-control">
+                            <label for="target3">
+                                <img src="Sprites/target3.png" alt="">
+                            </label>
+                            <input type="radio" id="target3">
+                        </div>
+                    </div>
+                    <div class="button">
+                        <button type="button" class="btn-play" disabled>Play</button>
+                        <button type="button" class="btn-inst">Instruction</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="inst-screen hide">
+                <button type="button" class="btn-x">X</button>
+                <h2>Instruction</h2>
+                <ul>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, quibusdam.</li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, quibusdam.</li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, quibusdam.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="coundown-screen hide">
+            <p class="countdown-element"></p>
+        </div>
+        <div class="game-screen hide">
+            <div class="game-left">
+                <div class="stats">
+                    <p>username</p>
+                    <p>score : <span id="span-score"></span></p>
+                    <p>Timer : <span id="span-timer"></span></p>
+                </div>
+
+                <div class="gun-in-game gun1"></div>
+
+                <div class="modal-pause hide">
+                    <p>Game Paused</p>
+                    <button class="btn-resume" id="resume-btn" type="button">Resume</button>
+                </div>
+
+                <div class="game-over hide">
+                    <h2>Game Over</h2>
+                    <p>Your Score : <span id="span-final-score"></span></p>
+                    <button type="button" class="btn-play-again">Play Again</button>
+                    <button type="button" class="btn-home">Home</button>
+                </div>
+            </div>
+
+
+            <div class="game-right"></div>
+        </div>
+    </div>
+    <img src="Sprites/pointer.png" class="pointer hide" alt="">
+    <script>
+        const btnPlay = document.querySelector('.btn-play');
+            const btnInst = document.querySelector('.btn-inst');
+            const btnX = document.querySelector('.btn-x');
+            const btnPlayAgain = document.querySelector('.btn-play-again');
+            const btnResume = document.querySelector('.btn-resume');
+            const modalPause = document.querySelector('.modal-pause');
+            const homeScreen = document.querySelector('.home-screen');
+            const gameScreen = document.querySelector('.game-screen');
+            const gameLeft = document.querySelector('.game-left');
+            const instScreen = document.querySelector('.inst-screen');
+            const gameOver = document.querySelector('.game-over');
+            const inputUsername = document.querySelector('.input-username');
+            const countDownScreen = document.querySelector('.coundown-screen');
+            const countDownElement = document.querySelector('.countdown-element');
+            const scoreElement = document.querySelector('#span-score');
+            const timerElement = document.querySelector('#span-timer');
+            const level = document.querySelector('#level');
+            const pointer = document.querySelector('.pointer');
+            const gunInGame = document.querySelector('.gun-in-game');
+
+
+            function toggleHide() {
+                instScreen.classList.toggle('hide');
+            }
+
+            btnX.addEventListener('click', e => {
+                instScreen.classList.add('hide');
+            })
+
+            btnInst.addEventListener('click', e => {
+                instScreen.classList.toggle('hide');
+            });
+
+            inputUsername.addEventListener('input', e => {
+                if (inputUsername.value == "") {
+                    btnPlay.disabled = true;
+                } else {
+                    btnPlay.disabled = false;
+                }
+            })
+
+            btnPlay.addEventListener('click', e => {
+                homeScreen.classList.add('hide');
+                countDownScreen.classList.remove('hide');
+                let countdown = 3
+                countDownElement.innerText = countdown
+
+                setInterval(() => {
+                    countdown--;
+                    countDownElement.innerText = countdown
+
+                    if (countdown == 0) {
+                        gameScreen.classList.remove('hide');
+                        countDownScreen.classList.add('hide');
+                        pointer.classList.remove('hide');
+                        startGame();
+                        isPause = false;
+
+                    }
+                }, 1000)
+            })
+
+            let isPause = false;
+
+            let timer = 30;
+            function startGame() {
+                createTarget()
+                createTarget()
+                createTarget()
+                if (level.value == "easy") {
+                    timer = 30
+                }
+                else if (level.value == "medium") {
+                    timer = 20
+                }
+                else if (level.value == "hard") {
+                    timer = 15
+                }
+
+                timerElement.innerText = timer;
+                setInterval(() => {
+                    if (isPause) {
+                        return
+                    }
+                    timer--;
+                    timerElement.innerText = timer;
+                    if (timer <= 0) {
+                        isPause = true;
+                        gameOver.classList.remove('hide');
+                    }
+                }, 1000);
+
+                setInterval(() => {
+                    if (isPause) {
+                        return
+                    }
+                    createTarget();
+                }, 3000)
+
+                window.addEventListener('mousemove', e => {
+                    let x = e.pageX
+                    let y = e.pageY
+                    pointer.style.left = x + 'px'
+                    pointer.style.top = y + 'px'
+                    gunInGame.style.left = x - 450 + "px"
+
+                })
+
+                gameLeft.addEventListener('click', e => {
+                    if (e.target.classList.contains('target') || e.target.classList.contains('btn-resume')) {
+                        return
+                    }
+                    timer = timer - 5
+                    timerElement.innerText = timer
+                    if (timer <= 0) {
+                        isPause = true;
+                        gameOver.classList.remove('hide');
+                    }
+                })
+            }
+
+            btnPlayAgain.addEventListener('click', e => {
+                window.location.reload()
+            })
+            btnResume.addEventListener('click', e => {
+                isPause = false;
+                modalPause.classList.add('hide');
+            })
+            let score = 1;
+
+            window.addEventListener('keydown', e => {
+                if (e.key == "Escape") {
+                    if (isPause == false) {
+                        isPause = true;
+                        modalPause.classList.remove('hide');
+                    } else {
+                        isPause = false;
+                        modalPause.classList.add('hide');
+                    }
+                }
+
+                if (e.key == " ") {
+                    if (gunInGame.classList.contains('gun1')) {
+                        gunInGame.classList.remove('gun1');
+                        gunInGame.classList.add('gun2');
+                    } else if (gunInGame.classList.contains('gun2')) {
+                        gunInGame.classList.remove('gun2');
+                        gunInGame.classList.add('gun1');
+                    }
+                }
+            })
+
+            function createTarget() {
+                let target = document.createElement('img');
+                target.src = 'Sprites/target1.png';
+                target.classList.add('target');
+                target.style.left = randonPut(100, 700) + "px";
+                target.style.top = randonPut(100, 500) + "px";
+                gameLeft.append(target);
+                target.addEventListener('click', e => {
+                    if (isPause) {
+                        return
+                    }
+                    target.remove();
+                    score++;
+                    scoreElement.innerText = score;
+                })
+
+            }
+
+            function randonPut(min, max) {
+                return Math.floor(Math.random() * max - min) + min;
+            }
+
+        
+
+    </script>
+</body>
+
+</html>

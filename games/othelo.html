@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.home-screen{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+form{
+    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: darkgoldenrod;
+    padding: 3rem 2rem;
+    border-radius: 1rem;
+    border: 2px solid black;
+}
+
+
+.hide{
+    display: none !important;
+}
+
+.inst-screen{
+    width: 400px;
+    background-color: burlywood;
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 2px solid black;
+}
+
+.countDownScreen{
+    background-color: royalblue;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+button{
+    width: 120px;
+    padding: .5rem 1rem;
+}
+
+button:enabled{
+    background-color: greenyellow;
+}
+
+.btnInst{
+    background-color: red !important;
+    color: white;
+    border-radius: .4rem;
+}
+
+.col{
+    width: 80px;
+    height: 80px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.game-screen{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.row{
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+}
+
+.board{
+    background-color: goldenrod;
+}
+
+.player-white{
+    width: 75px;
+    height: 75px;
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.player-black{
+        width: 75px;
+            height: 75px;
+            border: 2px solid white;
+            border-radius: 50%;
+            background-color: black;
+}
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="home-screen hide">
+            <form action="">
+                <h1>OTHELLOOOO</h1>
+                <div class="form-input">
+                    <label for="">username 1</label>
+                    <input type="text" class="username1input">
+                </div>
+                <div class="form-input">
+                    <label for="">username 2</label>
+                    <input type="text" class="username2input">
+                </div>
+
+                <div class="button-sec">
+                    <button class="btnPlay" type="button" disabled>Play</button>
+                    <button class="btnInst" type="button">Instruction</button>
+                </div>
+            </form>
+            <div class="inst-screen hide">
+                <ol>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, quidem!</li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, quidem!</li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, quidem!</li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, quidem!</li>
+                </ol>
+            </div>
+        </div>
+        <div class="countDownScreen hide">
+            <h1 class="counterEl"></h1>
+        </div>
+        <div class="game-screen">
+            <div class="board"></div>
+        </div>
+    </div>
+
+    <script>
+        let btnPlay = document.querySelector(".btnPlay")
+            let btnInst = document.querySelector(".btnInst")
+            let homeScreen = document.querySelector(".home-screen")
+            let gameScreen = document.querySelector(".game-screen")
+            let username1Input = document.querySelector(".username1input")
+            let username2Input = document.querySelector(".username2input")
+            let instScreen = document.querySelector(".inst-screen")
+            let countScreen = document.querySelector(".countDownScreen")
+            let counterEl = document.querySelector(".counterEl")
+            let board = document.querySelector(".board")
+            let grids = [];
+
+            function checkInput() {
+                btnPlay.disabled = username1Input.value == "" || username2Input.value == ""
+            }
+            username1Input.addEventListener("input", checkInput);
+            username2Input.addEventListener("input", checkInput);
+
+            btnInst.addEventListener('click', e => {
+                instScreen.classList.toggle("hide")
+            })
+
+            btnPlay.addEventListener("click", e => {
+                homeScreen.classList.add("hide")
+                countScreen.classList.remove("hide")
+
+                let count = 3
+                counterEl.innerHTML = count
+
+                let intCount = setInterval(() => {
+                    count--
+                    counterEl.innerHTML = count
+
+                    if (count <= 0) {
+                        clearInterval(intCount)
+                        countScreen.classList.add("hide")
+                        gameScreen.classList.remove("hide")
+                    }
+                }, 1000);
+
+            })
+
+            let row = 8;
+            let col = 8;
+
+            for (let r = 0; r < row; r++) {
+                let rowDiv = document.createElement("div")
+                rowDiv.classList.add("row")
+                let cols = [];
+                for (let c = 0; c < col; c++) {
+                    let colDiv = document.createElement("div")
+                    colDiv.classList.add("col")
+                    rowDiv.appendChild(colDiv)
+                    cols.push(colDiv)
+
+                    colDiv.addEventListener("click", function () {
+                        playerMove(r, c)
+                    })
+                }
+
+                grids.push(cols)
+                board.appendChild(rowDiv)
+            }
+
+            let firstPosWhite = [
+                {
+                    row: 4,
+                    col: 4,
+                },
+                {
+                    row: 3,
+                    col: 3,
+                }
+            ]
+            let firstPosBlack = [
+                {
+                    row: 4,
+                    col: 3,
+                },
+                {
+                    row: 3,
+                    col: 4,
+                }
+            ]
+            function drawPlayer() {
+                firstPosWhite.forEach(function (firstPos) {
+                    let cell = grids[firstPos.row][firstPos.col]
+                    let PlayerWhiteDraw = document.createElement("div")
+                    PlayerWhiteDraw.classList.add("player-white")
+                    cell.appendChild(PlayerWhiteDraw)
+                })
+
+                firstPosBlack.forEach(function (firstPos) {
+                    let cell = grids[firstPos.row][firstPos.col]
+                    let PlayerBlackFirst = document.createElement("div")
+                    PlayerBlackFirst.classList.add("player-black")
+                    cell.appendChild(PlayerBlackFirst)
+                })
+
+            }
+
+
+            const directions = [
+                [-1, -1], [-1, 0], [-1, 1],
+                [0, -1], [0, 1],
+                [1, -1], [1, 0], [1, 1],
+            ];
+
+            let currentPlayer = "white";
+            function playerMove(row, col) {
+                let cell = grids[row][col]
+
+                if (cell.children.length > 0) return
+
+                // Cek pion musuh yang bisa dibalik
+                let piecesToFlip = cariYangBisaDiFlip(row, col, currentPlayer)
+
+                if (piecesToFlip.length === 0) return  // Gak ada yang bisa dibalik = langkah gak valid
+
+                // Taruh pion pemain
+                let pion = document.createElement("div")
+                pion.classList.add(currentPlayer === "white" ? "player-white" : "player-black")
+                cell.appendChild(pion)
+
+                // Balik pion musuh
+                for (let posisi of piecesToFlip) {
+                    let targetCell = grids[posisi.row][posisi.col]
+                    targetCell.innerHTML = ""  // hapus pion lama
+
+                    let flippedPion = document.createElement("div")
+                    flippedPion.classList.add(currentPlayer === "white" ? "player-white" : "player-black")
+                    targetCell.appendChild(flippedPion)
+                }
+
+                // Ganti giliran
+                currentPlayer = (currentPlayer === "white") ? "black" : "white"
+            }
+
+            function cariYangBisaDiFlip(startRow, startCol, player) {
+                let lawan = (player === "white") ? "black" : "white"
+                let hasil = []
+
+                for (let [deltaRow, deltaCol] of directions) {
+                    let r = startRow + deltaRow
+                    let c = startCol + deltaCol
+                    let pionLawan = []
+
+                    while (r >= 0 && r < 8 && c >= 0 && c < 8) {
+                        let cell = grids[r][c]
+                        let isi = cell.firstChild
+
+                        if (!isi) break  // kotak kosong
+
+                        if (isi.classList.contains(`player-${lawan}`)) {
+                            pionLawan.push(
+                                {
+                                    row: r,
+                                    col: c
+                                }
+                            )  // masukin ke daftar
+                        } else if (isi.classList.contains(`player-${player}`)) {
+                            if (pionLawan.length > 0) {
+                                hasil.push(...pionLawan)  // ketemu ujung milik kita → valid
+                            }
+                            break
+                        } else {
+                            break
+                        }
+
+                        r += deltaRow
+                        c += deltaCol
+                    }
+                }
+
+                return hasil
+            }
+            drawPlayer()
+    </script>
+</body>
+
+</html>

@@ -34,6 +34,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: .3s all ease-in-out;
 }
 
 #navbar .list a:hover {
@@ -70,7 +71,7 @@ background-color: rgba(0, 0, 0, 0.662);
 /* } */
 
 .selected {
-    transition: .5s;
+    transition: .5s ease-in-out;
     transform: scale(1.1) translateY(-.8vh);
     border: .16vw solid var(--light-grey) !important;
     font-weight: bold;

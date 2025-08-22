@@ -16,6 +16,8 @@ const projectPage = document.querySelector("#projectPage");
 const textContainer = document.querySelector(".text-container");
 const footer = document.querySelector(".footer");
 const navbar = document.querySelector("#navbar");
+const buttonAbout = document.querySelector(".buttonAbout");
+const buttonContact = document.querySelector(".buttonContact");
 
 
 let intHome = setInterval(() => {
@@ -55,11 +57,11 @@ function createRestartButton() {
     };
 
     restartButton.addEventListener("click", () => {
-            setAnimationName(textAnimation, "none");
-            requestAnimationFrame(() =>
-                setTimeout(() => setAnimationName(textAnimation, ""), 0)
-            );
-        },
+        setAnimationName(textAnimation, "none");
+        requestAnimationFrame(() =>
+            setTimeout(() => setAnimationName(textAnimation, ""), 0)
+        );
+    },
         false
     );
 }
@@ -105,6 +107,25 @@ btnAbout.addEventListener("click", e => {
     btnProject.classList.remove('selected')
 });
 
+buttonAbout.addEventListener("click", e => {
+    homePage.classList.add('hide')
+    aboutPage.classList.remove('hide')
+    contactPage.classList.add('hide')
+    achievementPage.classList.add('hide')
+    articlePage.classList.add('hide')
+    projectPage.classList.add('hide')
+    textContainer.classList.add('hide')
+
+
+
+    btnHome.classList.remove('selected')
+    btnAbout.classList.add('selected')
+    btnContact.classList.remove('selected')
+    btnAchievement.classList.remove('selected')
+    btnArticle.classList.remove('selected')
+    btnProject.classList.remove('selected')
+});
+
 
 btnContact.addEventListener("click", e => {
     homePage.classList.add('hide')
@@ -115,7 +136,7 @@ btnContact.addEventListener("click", e => {
     projectPage.classList.add('hide')
     textContainer.classList.add('hide')
 
-    
+
     btnHome.classList.remove('selected')
     btnAbout.classList.remove('selected')
     btnContact.classList.add('selected')
@@ -124,6 +145,23 @@ btnContact.addEventListener("click", e => {
     btnProject.classList.remove('selected')
 });
 
+buttonContact.addEventListener("click", e => {
+    homePage.classList.add('hide')
+    aboutPage.classList.add('hide')
+    contactPage.classList.remove('hide')
+    achievementPage.classList.add('hide')
+    articlePage.classList.add('hide')
+    projectPage.classList.add('hide')
+    textContainer.classList.add('hide')
+
+
+    btnHome.classList.remove('selected')
+    btnAbout.classList.remove('selected')
+    btnContact.classList.add('selected')
+    btnAchievement.classList.remove('selected')
+    btnArticle.classList.remove('selected')
+    btnProject.classList.remove('selected')
+});
 
 
 
@@ -302,58 +340,76 @@ window.addEventListener("resize", () => {
 
 // project
 
-        // ====== Data Projects (EDIT DI SINI) =====
-    const projects = [
+// ====== Data Projects (EDIT DI SINI) =====
+const projects = [
     {
-        title: "Pixel Runner",
-    image: "images/posterSnakeGame.png",
-    languages: ["JavaScript", "HTML", "CSS"],
-    link: "#"
-            },
+        title: "Phyton Runner",
+        image: "images/posterSnakeGame.png",
+        languages: ["JavaScript", "HTML", "CSS"],
+        link: "games/Snake.html"
+    },
     {
-        title: "Space Invader Clone",
-    image: "https://via.placeholder.com/800x500?text=Space+Invader+Clone",
-    languages: ["JavaScript", "Canvas"],
-    link: "#"
-            },
+        title: "OOOthello",
+        image: "images/othelo.png",
+        languages: ["HTML", "CSS" ,"JavaScript"],
+        link: "games/othelo.html"
+    },
     {
-        title: "2048 Remix",
-    image: "https://via.placeholder.com/800x500?text=2048+Remix",
-    languages: ["TypeScript", "Vite"],
-    link: "#"
-            },
+        title: "Tictactoe",
+        image: "images/tictactoe.png",
+        languages: ["HTML", "CSS", "JavaScript"],
+        link: "games/tictactoe.html"
+    },
     {
-        title: "Snake Classic",
-    image: "https://via.placeholder.com/800x500?text=Snake+Classic",
-    languages: ["C#", ".NET"],
-    link: "#"
-            },
+        title: "Ant Killer",
+        image: "images/ant.png",
+        languages: ["HTML", "CSS", "JavaScript"],
+        link: "https://ant-killer.vercel.app/"
+    },
     {
-        title: "Flappy Block",
-    image: "https://via.placeholder.com/800x500?text=Flappy+Block",
-    languages: ["JavaScript", "HTML"],
-    link: "#"
-            },
+        title: "Block Jump",
+        image: "images/dino.png",
+        languages: ["HTML", "CSS", "JavaScript"],
+        link: "games/dino.html"
+    },
     {
-        title: "Chess AI Mini",
-    image: "https://via.placeholder.com/800x500?text=Chess+AI+Mini",
-    languages: ["Python"],
-    link: "#"
-            }
-    ];
+        title: "Bounch Ball",
+        image: "images/bouchball-poster.png",
+        languages: ["HTML", "CSS", "JavaScript", "canvas"],
+        link: "games/bounchBall.html"
+    },
+    {
+        title: "Flappy circle",
+        image: "images/flappy.png",
+        languages: ["JavaScript", "HTML", "CSS"],
+        link: "games/FlappyBird.html"
+    },
+    {
+        title: "Blind Maze",
+        image: "images/maze.png",
+        languages: ["HTML", "CSS", "JavaScript"],
+        link: "games/maze.html"
+    },
+    {
+        title: "Ghooter",
+        image: "images/shooter.jpg",
+        languages: ["HTML", "CSS", "JavaScript"],
+        link: "games/shooter.html"
+    }
+];
 
-        // ====== Util ======
-        const $ = (sel, scope = document) => scope.querySelector(sel);
-        const $$ = (sel, scope = document) => Array.from(scope.querySelectorAll(sel));
+// ====== Util ======
+const $ = (sel, scope = document) => scope.querySelector(sel);
+const $$ = (sel, scope = document) => Array.from(scope.querySelectorAll(sel));
 
-    const grid = $('#grid');
-    const searchInput = $('#searchInput');
-    const languageFilter = $('#languageFilter');
-    const resetBtn = $('#resetBtn');
-    const projectCount = $('#projectCount');
+const grid = $('#grid');
+const searchInput = $('#searchInput');
+const languageFilter = $('#languageFilter');
+const resetBtn = $('#resetBtn');
+const projectCount = $('#projectCount');
 
-    function renderCards(list) {
-        grid.innerHTML = list.map(p => `
+function renderCards(list) {
+    grid.innerHTML = list.map(p => `
         <article class="card-project">
           <img class="thumb" src="${p.image}" alt="Thumbnail ${p.title}" loading="lazy" />
           <div class="contentProject">
@@ -366,51 +422,51 @@ window.addEventListener("resize", () => {
         </article>
       `).join('');
     projectCount.textContent = `${list.length} project${list.length !== 1 ? 's' : ''}`;
-        }
+}
 
-    function uniqueLanguages(items) {
-            return Array.from(new Set(items.flatMap(p => p.languages))).sort((a, b) => a.localeCompare(b));
-        }
+function uniqueLanguages(items) {
+    return Array.from(new Set(items.flatMap(p => p.languages))).sort((a, b) => a.localeCompare(b));
+}
 
-    function populateLanguageFilter() {
-            const langs = uniqueLanguages(projects);
-            langs.forEach(l => {
-                const opt = document.createElement('option');
-    opt.value = l; opt.textContent = l; languageFilter.appendChild(opt);
-            });
-        }
+function populateLanguageFilter() {
+    const langs = uniqueLanguages(projects);
+    langs.forEach(l => {
+        const opt = document.createElement('option');
+        opt.value = l; opt.textContent = l; languageFilter.appendChild(opt);
+    });
+}
 
-    function applyFilters() {
-            const q = searchInput.value.trim().toLowerCase();
+function applyFilters() {
+    const q = searchInput.value.trim().toLowerCase();
     const lang = languageFilter.value;
-            const filtered = projects.filter(p => {
-                const matchesText = !q || p.title.toLowerCase().includes(q);
-    const matchesLang = !lang || p.languages.includes(lang);
-    return matchesText && matchesLang;
-            });
+    const filtered = projects.filter(p => {
+        const matchesText = !q || p.title.toLowerCase().includes(q);
+        const matchesLang = !lang || p.languages.includes(lang);
+        return matchesText && matchesLang;
+    });
     renderCards(filtered);
-        }
+}
 
-    // Events
-    searchInput.addEventListener('input', applyFilters);
-    languageFilter.addEventListener('change', applyFilters);
-        resetBtn.addEventListener('click', () => {
-        searchInput.value = '';
+// Events
+searchInput.addEventListener('input', applyFilters);
+languageFilter.addEventListener('change', applyFilters);
+resetBtn.addEventListener('click', () => {
+    searchInput.value = '';
     languageFilter.value = '';
     applyFilters();
     searchInput.focus();
-        });
+});
 
-    // Init
-    populateLanguageFilter();
-    renderCards(projects);
+// Init
+populateLanguageFilter();
+renderCards(projects);
 
 // ====== Integrasi ke SPA kamu ======
 // Pasang id="projects-section" di section ini. Untuk menyembunyikan:
 // document.getElementById('projects-section').classList.add('hide')
 // Untuk menampilkan: classList.remove('hide')
 
-    // Scroll animation handler
+// Scroll animation handler
 const items = document.querySelectorAll('.timeline-content');
 
 const showOnScroll = () => {

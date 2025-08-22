@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.app{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.home-screen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.inst-screen{
+    background-color: black;
+}
+
+.hide{
+    display: none !important;
+}
+
+.game-screen{
+    /* background-color: grey; */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.board{
+    width: 1000px;
+    height: 600px;
+    background-color: rgb(41, 108, 106);
+}
+
+.row{
+    display: flex;
+    width: 600px;
+}
+
+.col{
+    width: 60px;
+    height: 60px;
+    border: 1px black solid;
+}
+
+.player{
+    background-color: black;
+    border-radius: 50%;
+    border: white solid 2px;
+}
+
+.finish{
+    border-right: 2px gold solid;
+}
+
+.wall{
+    background-color: grey;
+}
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="home-screen hide">
+            <form action="">
+                <h1>Blind maze</h1>
+                <div class="form-control">
+                    <label for="">username</label>
+                    <input type="text" class="inputUsername">
+                </div>
+                <div class="button-sec">
+                    <button type="button" class="btnPlay" disabled>Play</button>
+                    <button type="button" class="btnInst">Instruction</button>
+                    <button type="button" class="btnLead">Leaderboard</button>
+                </div>
+            </form>
+            <div class="inst-screen hide">
+                <ul>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                </ul>
+            </div>
+
+            <div class="lead-screen hide">
+                <button class="btnCloseLead" type="button">X</button>
+                <h1>LeaderBoard</h1>
+            </div>
+        </div>
+        <div class="game-screen">
+            <div class="board"></div>
+
+            <button type="button" class="btnHint">Hint</button>
+        </div>
+    </div>
+
+    <script>
+        let btnPlay = document.querySelector(".btnPlay")
+            let btnInst = document.querySelector(".btnInst")
+            let btnLead = document.querySelector(".btnLead")
+            let btnCloseLead = document.querySelector(".btnCloseLead")
+            let homeScreen = document.querySelector(".home-screen")
+            let gameScreen = document.querySelector(".game-screen")
+            let leadScreen = document.querySelector(".lead-screen")
+            let instScreen = document.querySelector(".inst-screen")
+            let inputUsername = document.querySelector(".inputUsername")
+            let board = document.querySelector(".board")
+            let btnHint = document.querySelector(".btnHint")
+            let grids = [];
+            let rowCount = 10;
+            let colCount = 10;
+
+            let isMove = false;
+
+            setTimeout(() => {
+                isMove = true
+
+                let allWall = document.querySelectorAll(".wall")
+                allWall.forEach(function (wall) {
+                    wall.style.backgroundColor = "transparent"
+                })
+            }, 5000);
+            inputUsername.addEventListener('input', e => {
+                if (inputUsername.value == "") {
+                    btnPlay.disabled = true
+                } else {
+                    btnPlay.disabled = false
+                }
+            });
+
+            btnInst.addEventListener("click", e => {
+                instScreen.classList.toggle("hide")
+            })
+            btnLead.addEventListener("click", e => {
+                leadScreen.classList.toggle("hide")
+            })
+            btnCloseLead.addEventListener("click", e => {
+                leadScreen.classList.add("hide")
+            })
+
+            for (let row = 0; row < rowCount; row++) {
+                let divRow = document.createElement("div")
+                divRow.classList.add("row")
+                let cols = []
+
+                for (let col = 0; col < colCount; col++) {
+                    let divCol = document.createElement("div")
+                    divCol.classList.add("col")
+                    cols.push(divCol);
+                    divRow.appendChild(divCol)
+                }
+
+                grids.push(cols)
+                board.appendChild(divRow)
+            }
+
+            function randomizer(min, max) {
+                return Math.floor(Math.random() * (max - min) + min);
+            }
+            let direction = "rigt"
+
+            let rowPlayer
+            let colPlayer
+            function drawPlayer() {
+                rowPlayer = randomizer(0, rowCount);
+                colPlayer = 0;
+                let rowCurrent = rowPlayer;
+                let colCurrent = colPlayer;
+
+                grids[rowCurrent][colCurrent].classList.add("player", "way")
+
+
+                while (colCurrent < colCount - 1) {
+                    let moves = [];
+                    if (colCurrent < colCount - 1) {
+                        moves.push([rowCurrent, colCurrent + 1]);
+                    } if (rowPlayer > 0) {
+                        moves.push([rowCurrent - 1, colCurrent]);
+                    } if (rowPlayer < rowCount - 1) {
+                        moves.push([rowCurrent + 1, colCurrent]);
+                    }
+
+                    if (moves.length == 0) {
+                        continue
+                    }
+                    let [nextRow, nextCol] = moves[randomizer(0, moves.length)];
+
+                    if (nextRow >= 0 && nextRow < rowCount - 1 && nextCol >= 0 && nextCol < colCount) {
+                        rowCurrent = nextRow;
+                        colCurrent = nextCol;
+                        grids[rowCurrent][colCurrent].classList.add("way");
+                    } else {
+                        continue
+                    }
+
+
+                }
+                grids[rowCurrent][colCurrent].classList.add("finish");
+            }
+
+            btnHint.addEventListener("click", e => {
+                setTimeout(() => {
+                    isMove = true
+                    let allWall = document.querySelectorAll(".wall")
+                    allWall.forEach(function (wall) {
+                        wall.style.backgroundColor = "transparent"
+                    })
+                }, 1000);
+                isMove = false
+                let allWall = document.querySelectorAll(".wall")
+                allWall.forEach(function (wall) {
+                    wall.style.backgroundColor = "grey"
+                })
+
+            })
+
+            document.addEventListener("keydown", e => {
+                grids[rowPlayer][colPlayer].classList.remove("player")
+                if (e.key == "ArrowUp" && isMove == true && rowPlayer != 0) {
+                    rowPlayer--
+                } else if (e.key == "ArrowDown" && isMove == true && rowPlayer != 9) {
+                    rowPlayer++
+                } else if (e.key == "ArrowLeft" && isMove == true && colPlayer != 0) {
+                    colPlayer--
+                } else if (e.key == "ArrowRight" && isMove == true && colPlayer != 9) {
+                    colPlayer++
+                }
+                grids[rowPlayer][colPlayer].classList.add("player")
+
+                if (grids[rowPlayer][colPlayer].classList.contains("wall")) {
+                    alert("u lost")
+                }
+
+                else if (grids[rowPlayer][colPlayer].classList.contains("finish")) {
+                    setTimeout(() => {
+                        alert("u win")
+                        window.location.reload();
+                    }, 1000);
+                }
+            })
+            function drawFinish() {
+                let rowFinish = randomizer(0, rowCount);
+                let colFinish = 9;
+
+                grids[rowFinish][colFinish].classList.add("finish")
+            }
+            drawPlayer()
+            // drawFinish()
+            function drawWall() {
+                rowWall = randomizer(0, rowCount)
+                colWall = randomizer(0, colCount)
+                if (!grids[rowWall][colWall].classList.contains("player") && !grids[rowWall][colWall].classList.contains("finish") && !grids[rowWall][colWall].classList.contains("way")) {
+                    grids[rowWall][colWall].classList.add('wall')
+                } else {
+                    return
+                }
+            }
+
+            for (let i = 0; i < 70; i++) {
+                drawWall()
+            }
+
+
+
+        
+
+    </script>
+</body>
+
+</html>

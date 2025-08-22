@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bounch Ball</title>
+    <style>
+        *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 1.2rem;
+}
+
+
+
+body{
+    background: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 99vh;
+    color: white;
+    font-family: 'atma';
+}
+
+h1{
+    font-size: 3rem;
+}
+
+.hide{
+    display: none !important;
+}
+
+.card{
+    padding: 1.5rem;
+    background-color: #3b3939;
+}
+
+input{
+    width: 100%;
+    padding: .5rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+
+}
+
+select{
+    width: 100%;
+    padding: .5rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+}
+
+#start-game{
+    color: white;
+    background-color: blue;
+    padding: 1rem;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: .2s;
+}
+
+#start-game:hover{
+    background-color: #000286;
+    transform: scale(1.1);
+}
+
+
+    </style>
+   
+</head>
+
+<body>
+    <div id="home-screen" class="hide">
+        <div class="card">
+            <h1>Bounch Ball</h1>
+            <form action="">
+                <input type="text" id="name" placeholder="input your name">
+                <select name="" id="level">
+                    <option value="">Select Level</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">hard</option>
+                </select>
+                <button id="start-game">Start Game</button>
+            </form>
+        </div>
+    </div>
+    <div id="game-screen">
+        <canvas id="canvas" width="1000" height="600"></canvas>
+    </div>
+
+    <script>
+        const btnStartGame = document.getElementById('start-game');
+
+            let playerName
+            let level
+            let time
+            let dx
+            let dy
+            let bg
+
+            btnStartGame.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                const inputName = document.getElementById('name')
+                const inputLevel = document.getElementById('level')
+
+                console.log("input name", inputName.value)
+                console.log("input level", inputLevel.value)
+
+                playerName = inputName.value;
+                level = inputLevel.value;
+
+                if (level == 'easy') {
+                    time = 30
+                    dx = dy = 5;
+                } else if (level == 'medium') {
+                    time = 20
+                    dx = 10;
+                    dy = 7;
+                } else if (level == 'hard') {
+                    time = 15
+                    dx = 15
+                    dy = 10
+                }
+                startGame();
+            })
+
+            const homeScreen = document.getElementById('home-screen')
+            const gameScreen = document.getElementById('game-screen')
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            let isPaused = false
+            function startGame() {
+                level = 'easy'
+                time = 30
+                dx = dy = 5;
+                homeScreen.classList.add('hide')
+                gameScreen.classList.remove('hide')
+
+
+                bg = new Image
+                bg.src = "../images/bg2.avif"
+
+                window.addEventListener('keydown', (event) => {
+                    const playerSpeed = 5
+                    if (event.key == "ArrowLeft") {
+                        player1.dx = -playerSpeed
+                    }
+                    else if (event.key == "ArrowRight") {
+                        player1.dx = playerSpeed
+                    }
+                    else if (event.key == "a") {
+                        player2.dx = -playerSpeed
+                    }
+                    else if (event.key == "d") {
+                        player2.dx = playerSpeed
+                    } else if (event.key == "Escape") {
+                        isPaused = !isPaused
+                        alert('paused')
+                    }
+                })
+
+
+                window.addEventListener('keyup', (event) => {
+                    const playerSpeed = 0
+                    if (event.key == "ArrowLeft") {
+                        player1.dx = 0
+                    }
+                    else if (event.key == "ArrowRight") {
+                        player1.dx = 0
+                    }
+                    else if (event.key == "a") {
+                        player2.dx = 0
+                    }
+                    else if (event.key == "d") {
+                        player2.dx = 0
+                    }
+
+                })
+
+                let intervalTime = setInterval(() => {
+                    time--
+                    if (time <= 0) {
+                        gameover();
+                        clearInterval(intervalTime)
+                    }
+                }, 1000)
+
+                bg.onload = () => {
+                    setInterval(() => {
+                        ball.x += dx
+                        ball.y += dy
+                        player1.x += player1.dx
+                        player2.x += player2.dx
+
+                        if (player1.x < 0) {
+                            player1.x = 0
+                        }
+
+                        if (player1.x + player1.w > canvas.width) {
+                            player1.x = canvas.width - player1.w
+                        }
+
+                        if (player2.x < 0) {
+                            player2.x = 0
+                        }
+
+                        if (player2.x + player2.w > canvas.width) {
+                            player2.x = canvas.width - player2.w
+                        }
+
+
+                        if (ball.x + ball.r > canvas.width || ball.x < 0) {
+                            dx *= -1
+                        }
+
+                        function resetBallPost() {
+                            dx = dy = 0
+                            ball.x = canvas.width / 2
+                            ball.y = canvas.height / 2
+                            setTimeout(function () {
+                                dx = dy = 5
+                            }, 500)
+                        }
+
+                        if (ball.y + ball.r > canvas.height) {
+                            player2.score++
+                            resetBallPost()
+
+                        }
+                        if (ball.y < 0) {
+                            player1.score++
+                            resetBallPost()
+                        }
+
+
+                        if (ball.y < player2.y + player2.h &&
+                            ball.x > player2.x &&
+                            ball.x < player2.x + player2.w &&
+                            ball.y > player2.y
+                        ) {
+                            dy *= -1
+                        }
+
+                        else if (ball.y > player1.y &&
+                            ball.x > player1.x &&
+                            ball.x < player1.x + player1.w &&
+                            ball.y < player1.y + player1.h
+                        ) {
+                            dy *= -1
+                        }
+
+
+
+
+
+                        draw()
+                    }, 1000 / 60)
+                }
+
+
+            }
+
+            function gameover() {
+                alert(`Game Over! \n player 1 score : ${player1.score} \n player 2 score : ${player2.score}`);
+
+            }
+
+            const player1 = {
+                x: canvas.width / 2 - 100,
+                y: canvas.height - 100,
+                w: 200,
+                h: 30,
+                score: 0,
+                dx: 0
+            }
+
+            const player2 = {
+                x: canvas.width / 2 - 100,
+                y: 100,
+                w: 200,
+                h: 30,
+                score: 0,
+                dx: 0
+            }
+
+            const ball = {
+                x: canvas.width / 2,
+                y: canvas.height / 2,
+                r: 10,
+            }
+            function draw() {
+                ctx.drawImage(bg, 0, 0, canvas.width, canvas.height)
+                ctx.fillStyle = 'white'
+                ctx.beginPath()
+                ctx.rect(player1.x, player1.y, player1.w, player1.h)
+                ctx.rect(player2.x, player2.y, player2.w, player2.h)
+                ctx.fill()
+
+                ctx.fillStyle = 'black'
+                ctx.font = "25px Arial"
+                ctx.fillText(player1.score, player1.x + player1.w / 2, player1.y + player1.h / 1.3)
+
+
+                ctx.font = "25px Arial"
+                ctx.fillText(player2.score, player2.x + player2.w / 2, player2.y + player2.h / 1.3)
+
+                ctx.beginPath()
+                ctx.fillStyle = 'red'
+                ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2)
+                ctx.fill()
+                ctx.closePath()
+
+                ctx.fillStyle = 'white'
+                ctx.font = "30px Arial"
+                ctx.fillText("Time: " + time, canvas.width / 2 - 60, 50)
+
+            }
+
+            startGame();
+    </script>
+</body>
+
+</html>

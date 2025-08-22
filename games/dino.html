@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#app{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form{
+    background-color: rgb(255, 115, 15);
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: .5rem;
+    box-shadow: 2px 2px 10px black;
+}
+
+input{
+    width: 200px;
+    padding: .5rem;
+    border-radius: .4rem;
+}
+
+button{
+    width: 100px;
+    padding: .5rem;
+    border-radius: .5rem;
+    color: white;
+    background-color: black;
+    }
+
+button:disabled{
+    color: rgb(175, 175, 175);
+    background-color: grey;
+}
+
+
+.hide{
+    display: none !important;
+}
+
+
+.game-screen{
+    width: 600px;
+        height: 200px;
+        position: relative;
+        background-color: #fff;
+        border: 2px solid #000;
+        overflow: hidden;
+}
+
+.dino{
+    width: 40px;
+        height: 40px;
+        background-color: green;
+        position: absolute;
+        bottom: 0;
+        left: 50px;
+}
+
+        .cactus {
+            width: 20px;
+            height: 40px;
+            background-color: red;
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="home-screen">
+            <div class="form">
+                <form action="">
+                    <h1>DINO GAMES</h1>
+                    <input type="text" placeholder="Username" class="input-username">
+                    <button type="button" disabled class="btn-play">Play</button>
+                </form>
+            </div>
+        </div>
+        <div class="game-screen hide">
+            <p>Score : <span class="score-element"></span></p>
+            <div class="dino" id="dino"></div>
+
+        </div>
+    </div>
+    <script>
+        const btnPlay = document.querySelector('.btn-play');
+            const homeScreen = document.querySelector('.home-screen');
+            const gameScreen = document.querySelector('.game-screen');
+            const inputUsername = document.querySelector('.input-username');
+            const scoreElement = document.querySelector('.score-element');
+            const dino = document.getElementById('dino');
+            let isJumping = false;
+
+            inputUsername.addEventListener('input', e => {
+                if (inputUsername.value == "") {
+                    btnPlay.disabled = true;
+                } else {
+                    btnPlay.disabled = false
+                }
+            });
+
+
+            btnPlay.addEventListener('click', e => {
+                homeScreen.classList.add('hide');
+                gameScreen.classList.remove('hide');
+                setInterval(createCactus, 2000);
+            });
+
+            document.addEventListener('keypress', e => {
+                if (e.key == " " && !isJumping) {
+                    isJumping = true;
+                    dino.style.transition = "all 0.3s ease-out";
+                    dino.style.bottom = '100px';
+                    setTimeout(() => {
+                        dino.style.bottom = '0px';
+                        isJumping = false;
+                    }, 350);
+                }
+            })
+
+            document.addEventListener('click', e => {
+                if (!isJumping) {
+                    isJumping = true;
+                    dino.style.transition = "all 0.3s ease-out";
+                    dino.style.bottom = '100px';
+                    setTimeout(() => {
+                        dino.style.bottom = '0px';
+                        isJumping = false;
+                    }, 350);
+                }
+            })
+
+
+            let score = 0
+            function createCactus() {
+                const cactus = document.createElement('div');
+                cactus.classList.add('cactus');
+                cactus.style.left = "600px";
+                gameScreen.appendChild(cactus);
+
+                let cactusPosition = 600;
+                const cactusInterval = setInterval(() => {
+                    cactusPosition -= 5;
+                    cactus.style.left = cactusPosition + "px";
+
+                    if (cactusPosition < -20) {
+                        clearInterval(cactusInterval);
+                        gameScreen.removeChild(cactus);
+                        score++;
+                        scoreElement.innerText = score;
+                    }
+
+                    if (cactusPosition < 90 && cactusPosition > 60 && !isJumping) {
+                        alert('game over');
+                        clearInterval(cactusInterval)
+                        window.location.reload();
+                    }
+                }, 20)
+            }
+        
+
+    </script>
+</body>
+
+</html>
